@@ -37,7 +37,8 @@ function App() {
     <div className="App">
       {cards.map((card, index) => {
         return (
-          <Card
+          <C
+            ard
             key={index}
             card={card}
             index={index}
