@@ -1,4 +1,4 @@
-export const uniqueCards = [
+export const uniqueCardsArray = [
   {
     type: "Butterfly",
     image: require(`../assets/images/butterfly.jpeg`),
