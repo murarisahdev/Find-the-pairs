@@ -1,18 +1,15 @@
 import { useEffect, useState, useRef } from "react";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Button,
-  DialogTitle
-} from "@mui/material";
-import Card from "./components/card";
+import Card from "./components/Cards/card";
 import "./app.scss";
+import { Button, Container, Typography, Grid } from "@mui/material";
 import { uniqueCardsArray } from "./utils/uniqueCards";
 import { shuffleCards } from "./utils/shuffleCards";
+import SelectOption from "./components/Common/selectOption";
+import DialogBox from "./components/Common/dialogBox";
 
-const initialCardsArray = shuffleCards(uniqueCardsArray.concat(uniqueCardsArray))
+var initialCardsArray = shuffleCards(
+  uniqueCardsArray.slice(0, 10).concat(uniqueCardsArray).slice(0, 10)
+);
 
 export default function App() {
   const [cards, setCards] = useState(initialCardsArray);
@@ -21,22 +18,22 @@ export default function App() {
   const [shouldDisableAllCards, setShouldDisableAllCards] = useState(false);
   const [moves, setMoves] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [bestScore, setBestScore] = useState(
-    JSON.parse(localStorage.getItem("bestScore")) || Number.POSITIVE_INFINITY
-  );
+  const [option, setOption] = useState(10);
+  const [firstRender, setfirstRender] = useState(true);
+
   const timeout = useRef(null);
 
-  const disable = () =>  setShouldDisableAllCards(true);
-
-  const enable = () =>  setShouldDisableAllCards(false);
-  
+  const disable = () => setShouldDisableAllCards(true);
+  const enable = () => setShouldDisableAllCards(false);
+  const getScore = () => Object.entries(clearedCards).length;
+  const getScoreTotal = () => cards.length / 2;
+  const checkIsFlipped = (index) => openCards.includes(index);
+  const checkIsInactive = (card) => Boolean(clearedCards[card.type]);
 
   const checkCompletion = () => {
-    if (Object.keys(clearedCards).length === uniqueCardsArray.length) {
-      setShowModal(true);
-      const highScore = Math.min(moves, bestScore);
-      setBestScore(highScore);
-      localStorage.setItem("bestScore", highScore);
+    if (Object.keys(clearedCards).length === cards.length / 2) {
+      // setShowModal(true);
+      prompt("completed");
     }
   };
 
@@ -65,6 +62,18 @@ export default function App() {
     }
   };
 
+  function getFilteredArray() {
+    const tempArray = uniqueCardsArray.slice(0, option);
+    initialCardsArray = shuffleCards([...tempArray, ...tempArray]);
+    setCards(initialCardsArray);
+    setClearedCards({});
+    setOpenCards([]);
+    setShowModal(false);
+    setMoves(0);
+    setShouldDisableAllCards(false);
+    return initialCardsArray;
+  }
+
   useEffect(() => {
     let timeout = null;
     if (openCards.length === 2) {
@@ -79,10 +88,17 @@ export default function App() {
     checkCompletion();
   }, [clearedCards]);
 
-  const checkIsFlipped = (index) => openCards.includes(index);
-  
-  const checkIsInactive = (card) => Boolean(clearedCards[card.type]);
- 
+  useEffect(() => {
+    getFilteredArray();
+  }, [option]);
+
+  useEffect(() => {
+    let timerId = setTimeout(() => {
+      setfirstRender(false);
+    }, 5000);
+    return () => clearInterval(timerId);
+  }, []);
+
   const handleRestart = () => {
     setClearedCards({});
     setOpenCards([]);
@@ -90,77 +106,73 @@ export default function App() {
     setMoves(0);
     setShouldDisableAllCards(false);
     // set a shuffled deck of cards
-    setCards(initialCardsArray);
+    setCards(getFilteredArray());
+    setOption(10);
   };
 
   return (
-    <div className="App"
-    style={{
-        display: "flex",
-        alignItems: "center",
-        margin: "30px auto",
-        height: "85vh",
-        width: "720px",
-        backgroundColor: "#f1f2f3",
-        padding: "15px 30px",
-      }}>
-         <div>
-        <h3>Find the pairs</h3>
-      </div>
-      <div className="container">
-        {cards.map((card, index) => {
-          return (
-            <Card
-              key={index}
-              card={card}
-              index={index}
-              isDisabled={shouldDisableAllCards}
-              isInactive={checkIsInactive(card)}
-              isFlipped={checkIsFlipped(index)}
-              onClick={handleCardClick}
-            />
-          );
-        })}
-      </div>
-      <footer>
-        <div className="score">
-          <div className="moves">
-            <span className="bold">Score:</span> {moves}
-          </div>
-          {localStorage.getItem("bestScore") && (
-            <div className="high-score">
-              <span className="bold">Best Score:</span> {bestScore}
+    <div className="App">
+      <Container maxWidth="lg">
+        <Typography variant="h4" align="center">
+          Find the pairs
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={8}>
+            <div className="leftCards">
+              {cards.map((card, index) => {
+                return (
+                  <Card
+                    key={index}
+                    card={card}
+                    index={index}
+                    isDisabled={shouldDisableAllCards}
+                    isInactive={checkIsInactive(card)}
+                    isFlipped={checkIsFlipped(index)}
+                    onClick={handleCardClick}
+                    firstRender={firstRender}
+                  />
+                );
+              })}
             </div>
-          )}
-        </div>
-        <div className="restart">
-          <Button onClick={handleRestart} color="primary" variant="contained">
-            Restart
-          </Button>
-        </div>
-      </footer>
-      <Dialog
-        open={showModal}
-        disableBackdropClick
-        disableEscapeKeyDown
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Hurray!!! You completed the challenge
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            You completed the game in {moves} moves. Your best score is{" "}
-            {bestScore} moves.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleRestart} color="primary">
-            Restart
-          </Button>
-        </DialogActions>
-      </Dialog>
+          </Grid>
+          <Grid item xs={4}>
+            <div className="rightCard">
+              <div>
+                <div className="scroe">
+                  <Typography variant="h6">Score</Typography>
+                  <Typography variant="h5">
+                    <span>{getScore() ?? "0"}</span> / {getScoreTotal()}
+                  </Typography>
+                  <span>Tries : {moves}</span>
+                </div>
+                <div>
+                  <Typography variant="h6">Options</Typography>
+                  <div className="selectBox">
+                    <span>Size</span>
+                    <SelectOption
+                      setOption={setOption}
+                      option={option}
+                    ></SelectOption>
+                  </div>
+                </div>
+                <Button
+                  onClick={handleRestart}
+                  color="primary"
+                  variant="contained"
+                >
+                  Restart
+                </Button>
+              </div>
+              <DialogBox
+                open={showModal}
+                moves={moves}
+                getScore={getScore}
+                handleRestart={handleRestart}
+              />
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
     </div>
   );
 }
