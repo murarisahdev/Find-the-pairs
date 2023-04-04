@@ -33,10 +33,12 @@ export const uniqueCardsArray = [
   },
   {
     type: "Horse",
-    image: "http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRJ_M148rK8--5Yg5_0gEw49cjcIhQvvh4vv8xdgzMmNYFlqnXIHZ7BDCWEKplKd5-VcsOlHKVEfhUnrpU"
+    image:
+      "http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRJ_M148rK8--5Yg5_0gEw49cjcIhQvvh4vv8xdgzMmNYFlqnXIHZ7BDCWEKplKd5-VcsOlHKVEfhUnrpU",
   },
   {
     type: "Elephant",
-    image: "https://files.worldwildlife.org/wwfcmsprod/images/African_Elephant_Kenya_112367/story_full_width/qxyqxqjtu_WW187785.jpg",
-  }
+    image:
+      "https://files.worldwildlife.org/wwfcmsprod/images/African_Elephant_Kenya_112367/story_full_width/qxyqxqjtu_WW187785.jpg",
+  },
 ];

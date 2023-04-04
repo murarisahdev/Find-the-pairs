@@ -27,7 +27,7 @@ const DialogBox = ({ open, moves, getScore, handleRestart }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleRestart} color="primary">
-          Restart
+          Okay
         </Button>
       </DialogActions>
     </Dialog>

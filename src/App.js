@@ -1,11 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-import Card from "./components/Cards/card";
-import "./app.scss";
-import { Button, Container, Typography, Grid } from "@mui/material";
-import { uniqueCardsArray } from "./utils/uniqueCards";
-import { shuffleCards } from "./utils/shuffleCards";
-import SelectOption from "./components/Common/selectOption";
-import DialogBox from "./components/Common/dialogBox";
+import Card from "./components/cards/Card";
+import { Button, Container, Typography, Grid, Box } from "@mui/material";
+import { uniqueCardsArray } from "./utils/UniqueCards";
+import { shuffleCards } from "./utils/ShuffleCards";
+import Leftpanel from "./components/leftPanel/Leftpanel";
+import RightPanel from "./components/rightPanel/RightPanel";
 
 var initialCardsArray = shuffleCards(
   uniqueCardsArray.slice(0, 10).concat(uniqueCardsArray).slice(0, 10)
@@ -74,20 +73,6 @@ export default function App() {
   }
 
   useEffect(() => {
-    let timeout = null;
-    if (openCards.length === 2) {
-      timeout = setTimeout(evaluate, 300);
-    }
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [openCards]);
-
-  useEffect(() => {
-    checkCompletion();
-  }, [clearedCards]);
-
-  useEffect(() => {
     getFilteredArray();
   }, [option]);
 
@@ -110,70 +95,42 @@ export default function App() {
   };
 
   return (
-    <div className="App">
+    <Box
+      className="App"
+      sx={{ backgroundColor: "#f1f2f3", padding: "56px 0px" }}
+    >
       <Container maxWidth="lg">
-        <Typography variant="h4" align="center">
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{ fontSize: "40px", fontWeight: 700, paddingBottom: "57px" }}
+        >
           Find the pairs
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={8}>
-            <div className="leftCards">
-              {cards.map((card, index) => {
-                return (
-                  <Card
-                    key={index}
-                    card={card}
-                    index={index}
-                    isDisabled={shouldDisableAllCards}
-                    isInactive={checkIsInactive(card)}
-                    isFlipped={checkIsFlipped(index)}
-                    onClick={handleCardClick}
-                    firstRender={firstRender}
-                  />
-                );
-              })}
-            </div>
-          </Grid>
-          <Grid item xs={4}>
-            <div className="rightCard">
-              <div>
-                <div className="scroe">
-                  <Typography variant="h6">Score</Typography>
-                  <Typography variant="h5">
-                    <span>{getScore() ?? "0"}</span> / {getScoreTotal()}
-                  </Typography>
-                  <span>Tries : {moves}</span>
-                </div>
-                <div>
-                  <Typography variant="h6">Options</Typography>
-                  <div className="selectBox">
-                    <span>Size</span>
-                    <SelectOption
-                      setOption={setOption}
-                      option={option}
-                    ></SelectOption>
-                  </div>
-                </div>
-                <Button
-                  onClick={handleRestart}
-                  color="primary"
-                  variant="contained"
-                >
-                  Restart
-                </Button>
-              </div>
-              {showModal && (
-                <DialogBox
-                  open={showModal}
-                  moves={moves}
-                  getScore={getScore}
-                  handleRestart={handleRestart}
-                />
-              )}
-            </div>
-          </Grid>
+          <RightPanel
+            cards={cards}
+            shouldDisableAllCards={shouldDisableAllCards}
+            checkIsFlipped={checkIsFlipped}
+            checkIsInactive={checkIsInactive}
+            handleCardClick={handleCardClick}
+            firstRender={firstRender}
+            openCards={openCards}
+            evaluate={evaluate}
+            checkCompletion={checkCompletion}
+            clearedCards={clearedCards}
+          />
+          <Leftpanel
+            moves={moves}
+            getScore={getScore}
+            getScoreTotal={getScoreTotal}
+            option={option}
+            setOption={setOption}
+            showModal={showModal}
+            handleRestart={handleRestart}
+          />
         </Grid>
       </Container>
-    </div>
+    </Box>
   );
 }
