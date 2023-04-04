@@ -7,10 +7,10 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-const DialogBox = ({ showModal, moves, getScore, handleRestart }) => {
+const DialogBox = ({ open, moves, getScore, handleRestart }) => {
   return (
     <Dialog
-      open={showModal}
+      open={open}
       disableBackdropClick
       disableEscapeKeyDown
       aria-labelledby="alert-dialog-title"

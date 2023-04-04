@@ -32,8 +32,7 @@ export default function App() {
 
   const checkCompletion = () => {
     if (Object.keys(clearedCards).length === cards.length / 2) {
-      // setShowModal(true);
-      prompt("completed");
+      setShowModal(true);
     }
   };
 
@@ -163,12 +162,14 @@ export default function App() {
                   Restart
                 </Button>
               </div>
-              <DialogBox
-                open={showModal}
-                moves={moves}
-                getScore={getScore}
-                handleRestart={handleRestart}
-              />
+              {showModal && (
+                <DialogBox
+                  open={showModal}
+                  moves={moves}
+                  getScore={getScore}
+                  handleRestart={handleRestart}
+                />
+              )}
             </div>
           </Grid>
         </Grid>

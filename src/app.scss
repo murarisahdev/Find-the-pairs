@@ -3,7 +3,6 @@
     text-transform: uppercase;
   }
   .App {
-    // position: absolute;
     width:100%;
     height: 100%;
     background-color: #f1f2f3;
@@ -15,7 +14,7 @@
     }
     .leftCards {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(5, 1fr);
         gap: 1rem;
         width: 765px;
