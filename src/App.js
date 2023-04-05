@@ -26,12 +26,14 @@ export default function App() {
   const getScore = () => Object.entries(clearedCards).length;
   const getScoreTotal = () => cards.length / 2;
 
+  // To set all pairs found
   const checkCompletion = () => {
     if (Object.keys(clearedCards).length === cards.length / 2) {
       setShowModal(true);
     }
   };
 
+  // Matches for the same card
   const evaluate = () => {
     const [first, second] = openCards;
     enable();
@@ -46,6 +48,7 @@ export default function App() {
     }, 500);
   };
 
+  // Handle the click on card
   const handleCardClick = (index) => {
     if (openCards.length === 1) {
       setOpenCards((prev) => [...prev, index]);
@@ -57,6 +60,7 @@ export default function App() {
     }
   };
 
+  // Rearrange and increase the array length according to option pair
   function getFilteredArray() {
     const tempArray = uniqueCardsArray.slice(0, option);
     initialCardsArray = shuffleCards([...tempArray, ...tempArray]);
@@ -72,8 +76,9 @@ export default function App() {
   useEffect(() => {
     getFilteredArray();
   }, [option]);
-  
+
   useEffect(() => {
+    // Open the card for first time
     setfirstRender(true);
     let timerId = setTimeout(() => {
       setfirstRender(false);
@@ -94,7 +99,6 @@ export default function App() {
   useEffect(() => {
     checkCompletion();
   }, [clearedCards]);
-
 
   const handleRestart = () => {
     setClearedCards({});
