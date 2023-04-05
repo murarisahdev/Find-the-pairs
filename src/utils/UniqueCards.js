@@ -20,8 +20,8 @@ export const uniqueCardsArray = [
     image: require(`../assets/images/lion.jpeg`),
   },
   {
-    type: "Mockey",
-    image: require(`../assets/images/mockey.jpeg`),
+    type: "Monkey",
+    image: require(`../assets/images/monkey.jpeg`),
   },
   {
     type: "Parrot",
@@ -42,7 +42,7 @@ export const uniqueCardsArray = [
   },
   {
     type: "Corocodile",
-    image: require(`../assets/images/corocodile.jpeg`),
+    image: require(`../assets/images/crocodile.jpeg`),
   },
   {
     type: "Dolphin",

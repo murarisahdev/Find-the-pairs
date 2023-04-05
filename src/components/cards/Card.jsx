@@ -1,8 +1,13 @@
+//React
 import React from "react";
+//classnames
 import classnames from "classnames";
+//components
 import "./Card.scss";
+//material ui
 import { Box } from "@mui/material";
-import QuestionMark from "../../assets/svgs/questionMark";
+//assets
+import QuestionMark from "../../assets/svgs/QuestionMark";
 
 const Card = ({
   onClick,

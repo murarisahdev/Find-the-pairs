@@ -1,6 +1,9 @@
+//React
 import React from "react";
+//components
 import SelectOption from "../common/SelectOption";
 import DialogBox from "../common/DialogBox";
+//material ui
 import { Button, Typography, Grid, Box } from "@mui/material";
 
 const Leftpanel = ({

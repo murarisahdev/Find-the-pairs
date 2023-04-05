@@ -1,7 +1,11 @@
+//useEffect,useState,useRef
 import { useEffect, useState, useRef } from "react";
+//Material UI
 import { Container, Typography, Grid, Box } from "@mui/material";
+//utils
 import { uniqueCardsArray } from "./utils/UniqueCards";
 import { shuffleCards } from "./utils/ShuffleCards";
+//components
 import Leftpanel from "./components/leftPanel/Leftpanel";
 import RightPanel from "./components/rightPanel/RightPanel";
 

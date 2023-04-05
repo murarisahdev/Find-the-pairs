@@ -1,3 +1,4 @@
+//material ui
 import {
   Dialog,
   DialogActions,
@@ -35,3 +36,4 @@ const DialogBox = ({ open, moves, getScore, handleRestart }) => {
 };
 
 export default DialogBox;
+ 

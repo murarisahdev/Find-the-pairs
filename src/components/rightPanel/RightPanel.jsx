@@ -1,5 +1,8 @@
+//React
 import React from "react";
+//material ui
 import { Grid, Box } from "@mui/material";
+//components
 import Card from "../cards/Card";
 
 const RightPanel = ({
