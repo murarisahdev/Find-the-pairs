@@ -73,13 +73,14 @@ export default function App() {
     return initialCardsArray;
   }
 
-  useEffect(() => {
-    getFilteredArray();
-  }, [option]);
+  // useEffect(() => {
+  //   getFilteredArray();
+  // }, [option]);
 
   useEffect(() => {
     // Open the card for first time
     setfirstRender(true);
+    getFilteredArray();
     let timerId = setTimeout(() => {
       setfirstRender(false);
     }, 5000);
