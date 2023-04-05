@@ -5,23 +5,27 @@ import Card from "../cards/Card";
 const RightPanel = ({
   cards,
   shouldDisableAllCards,
-  checkIsFlipped,
-  checkIsInactive,
   handleCardClick,
   firstRender,
   openCards,
-  evaluate,
-  checkCompletion,
   clearedCards,
 }) => {
+  
+  const cardLength = cards?.length;
+  const colItem = cardLength === 30 ? 6 : cardLength === 42 ? 6 : cardLength === 36 ? 6 : 4;
+  const rowItem = cardLength === 30 ? 5 : cardLength === 42 ? 7 : cardLength === 36 ? 6 : 5;
+
+  const checkIsFlipped = (index) => openCards.includes(index);
+  const checkIsInactive = (card) => Boolean(clearedCards[card.type]);
+
   return (
     <>
       <Grid item xs={8}>
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gridTemplateRows: "repeat(5, 1fr)",
+            gridTemplateColumns: `repeat(${colItem}, 1fr)`,
+            gridTemplateRows: `repeat(${rowItem}, 1fr)`,
             gap: "1rem",
           }}
         >
@@ -36,10 +40,6 @@ const RightPanel = ({
                 isFlipped={checkIsFlipped(index)}
                 onClick={handleCardClick}
                 firstRender={firstRender}
-                openCards={openCards}
-                evaluate={evaluate}
-                checkCompletion={checkCompletion}
-                clearedCards={clearedCards}
               />
             );
           })}

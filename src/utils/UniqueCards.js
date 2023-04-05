@@ -33,12 +33,55 @@ export const uniqueCardsArray = [
   },
   {
     type: "Horse",
-    image:
-      "http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRJ_M148rK8--5Yg5_0gEw49cjcIhQvvh4vv8xdgzMmNYFlqnXIHZ7BDCWEKplKd5-VcsOlHKVEfhUnrpU",
+    image: require(`../assets/images/horse.jpeg`),
+    
   },
   {
-    type: "Elephant",
-    image:
-      "https://files.worldwildlife.org/wwfcmsprod/images/African_Elephant_Kenya_112367/story_full_width/qxyqxqjtu_WW187785.jpg",
+    type: "Octopus",
+    image: require(`../assets/images/octopus.jpeg`),
+  },
+  {
+    type: "Corocodile",
+    image: require(`../assets/images/corocodile.jpeg`),
+  },
+  {
+    type: "Dolphin",
+    image: require(`../assets/images/dolphin.jpeg`),
+  },
+  {
+    type: "Hyenas",
+    image: require(`../assets/images/hyenas.jpeg`),
+  },
+  {
+    type: "Mouse",
+    image: require(`../assets/images/mouse.jpeg`),
+  },
+  {
+    type: "Peacock",
+    image: require(`../assets/images/peacock.jpeg`),
+  },
+  {
+    type: "Pigeon",
+    image: require(`../assets/images/pigeon.jpeg`),
+  },
+  {
+    type: "Sheep",
+    image: require(`../assets/images/sheep.jpeg`),
+  },
+  {
+    type: "Starfish",
+    image: require(`../assets/images/starfish.jpeg`),
+  },
+  {
+    type: "Tiger",
+    image: require(`../assets/images/tiger.jpeg`),
+  },
+  {
+    type: "Wolf",
+    image: require(`../assets/images/wolf.jpeg`),
+  },
+  {
+    type: "Snake",
+    image: require(`../assets/images/snake.jpeg`),
   },
 ];

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classnames from "classnames";
-import questionMarkIcon from "../../assets/icons/questionMarkIcon.svg";
 import "./Card.scss";
 import { Box } from "@mui/material";
+import QuestionMark from "../../assets/svgs/questionMark";
 
 const Card = ({
   onClick,
@@ -11,27 +11,10 @@ const Card = ({
   isInactive,
   isFlipped,
   isDisabled,
-  firstRender,
-  openCards,
-  evaluate,
-  checkCompletion,
-  clearedCards,
+  firstRender
 }) => {
+
   const handleClick = () => !isFlipped && !isDisabled && onClick(index);
-
-  useEffect(() => {
-    let timeout = null;
-    if (openCards.length === 2) {
-      timeout = setTimeout(evaluate, 300);
-    }
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [openCards]);
-
-  useEffect(() => {
-    checkCompletion();
-  }, [clearedCards]);
 
   return (
     <Box
@@ -64,7 +47,7 @@ const Card = ({
           borderRadius: "4px",
         }}
       >
-        <img src={questionMarkIcon} alt="questionMarkIcon" />
+        <QuestionMark/>
       </Box>
       <Box
         className="card-face card-back-face"

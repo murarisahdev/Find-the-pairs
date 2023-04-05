@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import Card from "./components/cards/Card";
-import { Button, Container, Typography, Grid, Box } from "@mui/material";
+import { Container, Typography, Grid, Box } from "@mui/material";
 import { uniqueCardsArray } from "./utils/UniqueCards";
 import { shuffleCards } from "./utils/ShuffleCards";
 import Leftpanel from "./components/leftPanel/Leftpanel";
@@ -26,8 +25,6 @@ export default function App() {
   const enable = () => setShouldDisableAllCards(false);
   const getScore = () => Object.entries(clearedCards).length;
   const getScoreTotal = () => cards.length / 2;
-  const checkIsFlipped = (index) => openCards.includes(index);
-  const checkIsInactive = (card) => Boolean(clearedCards[card.type]);
 
   const checkCompletion = () => {
     if (Object.keys(clearedCards).length === cards.length / 2) {
@@ -75,13 +72,29 @@ export default function App() {
   useEffect(() => {
     getFilteredArray();
   }, [option]);
-
+  
   useEffect(() => {
+    setfirstRender(true);
     let timerId = setTimeout(() => {
       setfirstRender(false);
     }, 5000);
     return () => clearInterval(timerId);
-  }, []);
+  }, [option]);
+
+  useEffect(() => {
+    let timeout = null;
+    if (openCards.length === 2) {
+      timeout = setTimeout(evaluate, 300);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [openCards]);
+
+  useEffect(() => {
+    checkCompletion();
+  }, [clearedCards]);
+
 
   const handleRestart = () => {
     setClearedCards({});
@@ -111,13 +124,9 @@ export default function App() {
           <RightPanel
             cards={cards}
             shouldDisableAllCards={shouldDisableAllCards}
-            checkIsFlipped={checkIsFlipped}
-            checkIsInactive={checkIsInactive}
             handleCardClick={handleCardClick}
             firstRender={firstRender}
             openCards={openCards}
-            evaluate={evaluate}
-            checkCompletion={checkCompletion}
             clearedCards={clearedCards}
           />
           <Leftpanel
